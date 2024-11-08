@@ -1,17 +1,33 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config()
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); 
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
+
+// Define the allowed origins, including the Chrome extension
+const allowedOrigins = [
+    'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', // Chrome extension origin
+    'https://reasonate.vayomar.com' // Add the front-end origin, if needed
+];
+
+// Configure CORS middleware
 app.use(cors({
-    origin: 'chrome://extensions/?id=gobdibcbkaehioglmegimofidiakkbfk', 
+    origin: function (origin, callback) {
+        // Allow requests from specified origins
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['POST'],
-    allowedHeaders: ['Content-Type']
+    allowedHeaders: ['Content-Type'],
 }));
 
 app.use(express.json());
 
+// Route to create a checkout session
 app.post('/create-checkout-session', async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.create({

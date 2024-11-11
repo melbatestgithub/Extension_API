@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    'https://reasonate.vayomar.com' 
+    ' https://extension-api-2v7n.onrender.com' 
 ];
 
 app.use(cors({
@@ -29,8 +29,8 @@ app.post('/create-checkout-session', async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: 'https://reasonate.vayomar.com/online-flow',
-            cancel_url: 'https://reasonate.vayomar.com/cancel',
+            success_url: 'https://extension-api-2v7n.onrender.com/success.html',
+            cancel_url: ' https://extension-api-2v7n.onrender.com/cancel.html',
             line_items: [
                 {
                     price_data: {
@@ -38,7 +38,7 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: 50, 
+                        unit_amount: 60, 
                     },
                     quantity: 1,
                 },

@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    'https://reasonate.vayomar.com'
+    'https://reasonate.vayomar.com' 
 ];
 
 app.use(cors({
@@ -25,16 +25,6 @@ app.use(cors({
 app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {
-    const { numberOfChecks } = req.body;
-    const pricePerCheck = 25; // in cents
-
-    const totalAmount = pricePerCheck * numberOfChecks;
-
-    // Ensure the total is at least 50 cents (Stripe's minimum charge)
-    if (totalAmount < 50) {
-        return res.status(400).json({ error: 'Minimum total amount must be 50 cents or more' });
-    }
-
     try {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -48,7 +38,7 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: totalAmount,
+                        unit_amount: 1000, 
                     },
                     quantity: 1,
                 },

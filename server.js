@@ -38,7 +38,7 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: 1000, 
+                        unit_amount: 50, 
                     },
                     quantity: 1,
                 },

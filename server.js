@@ -26,6 +26,14 @@ app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {
     const { numberOfChecks } = req.body;
+    const pricePerCheck = 25; // in cents
+
+    const totalAmount = pricePerCheck * numberOfChecks;
+
+    // Ensure the total is at least 50 cents (Stripe's minimum charge)
+    if (totalAmount < 50) {
+        return res.status(400).json({ error: 'Minimum total amount must be 50 cents or more' });
+    }
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -40,9 +48,9 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: 25, // 25 cents per check
+                        unit_amount: totalAmount,
                     },
-                    quantity: numberOfChecks,
+                    quantity: 1,
                 },
             ],
         });

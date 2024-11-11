@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    'https://reasonate.vayomar.com' 
+    'https://reasonate.vayomar.com'
 ];
 
 app.use(cors({
@@ -25,6 +25,8 @@ app.use(cors({
 app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {
+    const { numberOfChecks } = req.body;
+
     try {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -38,9 +40,9 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: 1000, 
+                        unit_amount: 25, // 25 cents per check
                     },
-                    quantity: 1,
+                    quantity: numberOfChecks,
                 },
             ],
         });

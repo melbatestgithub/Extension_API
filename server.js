@@ -4,9 +4,10 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
+
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    ' https://extension-api-2v7n.onrender.com' 
+    'https://reasonate.vayomar.com' 
 ];
 
 app.use(cors({
@@ -25,11 +26,19 @@ app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {
     try {
+        const { checksUsed } = req.body;  // Get the checksUsed count from the frontend
+
+        let price = 0;
+        // If the user has used fewer than 2 checks, it's free
+        if (checksUsed >= 2) {
+            price = 1800; // Charge $18 for unlimited use (in cents)
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: 'https://extension-api-2v7n.onrender.com/success.html',
-            cancel_url: ' https://extension-api-2v7n.onrender.com/cancel.html',
+            success_url: 'https://reasonate.vayomar.com/online-flow',
+            cancel_url: 'https://reasonate.vayomar.com/cancel',
             line_items: [
                 {
                     price_data: {
@@ -37,7 +46,7 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: 'Fact Checker Subscription',
                         },
-                        unit_amount: 60, 
+                        unit_amount: price,
                     },
                     quantity: 1,
                 },

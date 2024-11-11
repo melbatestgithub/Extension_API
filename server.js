@@ -4,7 +4,6 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
     ' https://extension-api-2v7n.onrender.com' 

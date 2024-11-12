@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .checkmark {
+            font-size: 64px;
+            color: #4caf50;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #666;
+            margin: 15px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            background-color: #4caf50;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .button:active {
+            background-color: #3d8f43;
+        }
+
+        .rating {
+            margin-top: 20px;
+        }
+        .calibord-response{
+          color: #3d8f43;
+          background-color: #ddd;
+          padding: 4px;
+          border-radius: 20px;
+          font-weight: 900;
+          font-size: 1rem;
+        }
+
+        .star {
+            font-size: 32px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="checkmark">✔️</div>
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your purchase! Your payment has been processed successfully.</p>
+        <p class="calibord-response">Your response is on the calibord.</p>
+
+        <div class="rating">
+            <h2>Rate Our Service</h2>
+            <div id="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <p id="rating-text" style="font-size: 1em; color: #666;">Click to rate</p>
+        </div>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('rating-text');
+        let rating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                rating = star.getAttribute('data-rating');
+                updateRating(rating);
+                ratingText.textContent = `You rated ${rating} star${rating > 1 ? 's' : ''}`;
+            });
+        });
+
+        function updateRating(rating) {
+            stars.forEach(star => {
+                star.classList.remove('selected');
+                if (star.getAttribute('data-rating') <= rating) {
+                    star.classList.add('selected');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

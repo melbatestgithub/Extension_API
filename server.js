@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
     'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    'https://reasonate.vayomar.com' 
+    'https://localhost:3000' 
 ];
 
 app.use(cors({
@@ -23,22 +23,21 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.static('public'))
 
 app.post('/create-checkout-session', async (req, res) => {
     try {
-        const { checksUsed } = req.body;  // Get the checksUsed count from the frontend
-
+        const { checksUsed } = req.body;  
         let price = 0;
-        // If the user has used fewer than 2 checks, it's free
         if (checksUsed >= 2) {
-            price = 1800; // Charge $18 for unlimited use (in cents)
+            price = 1800;
         }
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: 'https://reasonate.vayomar.com/online-flow',
-            cancel_url: 'https://reasonate.vayomar.com/cancel',
+            success_url: 'http://localhost:3000/success.html',
+            cancel_url: 'http://localhost:3000/cancel.html',
             line_items: [
                 {
                     price_data: {

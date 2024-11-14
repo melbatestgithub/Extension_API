@@ -6,8 +6,8 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 
 const allowedOrigins = [
-    'chrome-extension://gobdibcbkaehioglmegimofidiakkbfk', 
-    'https://localhost:3000' 
+    'chrome-extension://paijfbkpnafhmoeiepjhbadjlbagnged', 
+    'https://extension-api-2v7n.onrender.com' 
 ];
 
 app.use(cors({
@@ -36,8 +36,8 @@ app.post('/create-checkout-session', async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: 'http://localhost:3000/success.html',
-            cancel_url: 'http://localhost:3000/cancel.html',
+            success_url: 'https://extension-api-2v7n.onrender.com/success.html',
+            cancel_url: 'https://extension-api-2v7n.onrender.com/cancel.html',
             line_items: [
                 {
                     price_data: {

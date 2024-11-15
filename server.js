@@ -27,12 +27,6 @@ app.use(express.static('public'))
 
 app.post('/create-checkout-session', async (req, res) => {
     try {
-        const { checksUsed } = req.body;  
-        let price = 0;
-        if (checksUsed >= 2) {
-            price = 1800;
-        }
-
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
@@ -43,9 +37,9 @@ app.post('/create-checkout-session', async (req, res) => {
                     price_data: {
                         currency: 'usd',
                         product_data: {
-                            name: 'Fact Checker Subscription',
+                            name: 'Fact Checker Unlimited Access',
                         },
-                        unit_amount: price,
+                        unit_amount: 1800, // $18.00
                     },
                     quantity: 1,
                 },

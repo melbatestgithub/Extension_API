@@ -37,7 +37,7 @@ app.post('/create-checkout-session', async (req, res) => {
                     price_data: {
                         currency: 'usd',
                         product_data: {
-                            name: 'Fact Checker Unlimited Access',
+                            name: 'Israel Fact Checker for Unlimited Access.Once you pay this You have Unlimited access.',
                         },
                         unit_amount: 1800, // $18.00
                     },

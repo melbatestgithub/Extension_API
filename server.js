@@ -10,6 +10,8 @@ const allowedOrigins = [
     'https://extension-api-2v7n.onrender.com' 
 ];
 
+
+
 app.use(cors({
     origin: function (origin, callback) {
         if (allowedOrigins.includes(origin) || !origin) {

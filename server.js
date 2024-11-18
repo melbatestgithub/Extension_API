@@ -11,7 +11,7 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (allowedOrigins.includes(origin) || !origin) {
+        if ((origin && origin.startsWith('chrome-extension://')) || allowedOrigins.includes(origin) || !origin) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));

@@ -10,8 +10,6 @@ const allowedOrigins = [
     'https://extension-api-2v7n.onrender.com' 
 ];
 
-
-
 app.use(cors({
     origin: function (origin, callback) {
         if (allowedOrigins.includes(origin) || !origin) {
@@ -55,5 +53,5 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

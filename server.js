@@ -8,7 +8,6 @@ const app = express();
 const allowedOrigins = [
     'https://extension-api-2v7n.onrender.com' 
 ];
-
 app.use(cors({
     origin: function (origin, callback) {
         if ((origin && origin.startsWith('chrome-extension://')) || allowedOrigins.includes(origin) || !origin) {
